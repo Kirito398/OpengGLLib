@@ -25,12 +25,20 @@ project("opengl")
 # for GameActivity/NativeActivity derived applications, the same library name must be
 # used in the AndroidManifest.xml file.
 include_directories(src/main/cpp/egl)
+include_directories(src/main/cpp/utils)
+include_directories(src/main/cpp/core)
+include_directories(include)
 
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
-        opengl.cpp
+        nativelib.cpp
         egl/display.h
         egl/display.cpp
+        core/nativecore.h
+        core/nativecore.cpp
+        include/stb_image.h
+        utils/log.cpp
+        utils/log.h
 )
 
 # Specifies libraries CMake should link to your target library. You

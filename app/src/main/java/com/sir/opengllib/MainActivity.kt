@@ -1,33 +1,30 @@
 package com.sir.opengllib
 
-import android.os.Bundle
-import android.view.SurfaceHolder
-import android.view.SurfaceView
-import androidx.appcompat.app.AppCompatActivity
-import com.sir.opengl.OpenGL
-import com.sir.opengl.OpenGLImpl
+import com.sir.opengllib.base.GLActivity
+import com.sir.opengllib.base.GLSprite2D
+import com.sir.opengllib.base.GLTexture2D
+import com.sir.opengllib.base.interfaces.GLRenderer
 
-class MainActivity : AppCompatActivity() {
-    private val openGL: OpenGL = OpenGLImpl()
+class MainActivity : GLActivity() {
+    private lateinit var texture: GLTexture2D
+    private lateinit var sprite1: GLSprite2D
+    private lateinit var sprite2: GLSprite2D
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onSurfaceCreated() {
+        texture = GLTexture2D("texture.png", applicationContext)
+        sprite1 = GLSprite2D(texture, 0, 0, 430, 430)
+        sprite2 = GLSprite2D(texture, 430, 430, 430, 430)
+    }
 
-        val surface = SurfaceView(this)
-        setContentView(surface)
+    override fun onUpdate(deltaTime: Long) {
+        //TODO("Not yet implemented")
+    }
 
-        surface.holder.addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceCreated(holder: SurfaceHolder) {
-                openGL.initGL(holder.surface)
-            }
-
-            override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
-                openGL.drawFrame()
-            }
-
-            override fun surfaceDestroyed(p0: SurfaceHolder) {
-                openGL.clean()
-            }
-        })
+    override fun onDraw(renderer: GLRenderer) {
+        renderer.apply {
+            //render(texture, 0, 0)
+            render(sprite1, -215, 215)
+            render(sprite2, 215, -215)
+        }
     }
 }
